@@ -1,9 +1,12 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.miaoqu.dao.MenuDao">
-    <select id="getAllMenus" resultType="com.miaoqu.entity.Menu">
-        select tid, name, createTime, parentID, path,createTime
+    <select id="getAllMenu" resultType="com.miaoqu.entity.Menu">
+        select *
         from menu
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)from menu
     </select>
 </mapper>
