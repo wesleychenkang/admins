@@ -2,7 +2,6 @@ package com.miaoqu.entity;
 
 import java.util.Date;
 import java.util.List;
-
 /**
  * Created by wesley on 2018/10/31.
  * <p>
@@ -14,6 +13,7 @@ public class Menu {
     private String name;
     private Integer parentID;
     private String path;
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     /**
      * 子菜单集合
@@ -66,5 +66,17 @@ public class Menu {
 
     public void setChaild(List<Menu> chaild) {
         this.chaild = chaild;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "tid=" + tid +
+                ", name='" + name + '\'' +
+                ", parentID=" + parentID +
+                ", path='" + path + '\'' +
+                ", createTime=" + createTime +
+                ", chaild=" + chaild +
+                '}';
     }
 }

@@ -1,9 +1,12 @@
 package com.miaoqu.controller;
 
+import com.miaoqu.entity.Menu;
 import com.miaoqu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by wesley on 2018/10/29.
@@ -23,9 +26,12 @@ public class Test {
     private MenuService menuService;
 
     @RequestMapping(value = {"/index"})
-    public String index() {
-        menuService.getAllMenu();
-        return "index";
+    public List<Menu> index() {
+        List<Menu> list = menuService.getAllMenu();
+        if (null != list && list.size() >= 1) {
+            System.out.println(list.get(0));
+        }
+        return list;
     }
 
 }

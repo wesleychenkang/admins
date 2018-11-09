@@ -1,5 +1,7 @@
 package com.miaoqu.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ public class ChannleMaster {
 
     private Integer tid;
     private String channelName;
+    // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     public Integer getTid() {

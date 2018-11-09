@@ -24,9 +24,13 @@ spring:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
 
-    mybatis:
-      mapperLocations: classpath:mapper/*Dao.xml
-      typeAliasesPackage: com.miaoqu.entity
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+
+mybatis:
+   mapperLocations: classpath:mapper/*Dao.xml
+   typeAliasesPackage: com.miaoqu.entity
 
 #    mapper:
 #       mappers :
