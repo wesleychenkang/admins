@@ -1,7 +1,5 @@
 package com.miaoqu.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 /**
@@ -21,10 +19,17 @@ public class User {
      * 密码
      */
     private String passWord;
+
     /**
-     * 权限
+     * 用户拥有的权限
      */
     private Authority authority;
+
+    /**
+     * 父ID
+     */
+    private Integer parentId;
+
 
     private Date createTime;
 
@@ -76,5 +81,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }

@@ -1,7 +1,5 @@
 package com.miaoqu.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +24,13 @@ public class Role {
      * 角色的父角色ID
      */
     private Integer parentID;
+
+    /**
+     * 菜单ID集合
+     */
+    private String menus;
+
+
     /**
      * 子角色ID集合
      */
@@ -78,5 +83,13 @@ public class Role {
 
     public void setChild(List<Role> child) {
         this.child = child;
+    }
+
+    public String getMenus() {
+        return menus;
+    }
+
+    public void setMenus(String menus) {
+        this.menus = menus;
     }
 }

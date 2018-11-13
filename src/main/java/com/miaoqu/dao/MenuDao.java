@@ -34,7 +34,4 @@ public interface MenuDao {
     void remove(Integer tid);
 
 
-    int getCount();
-
-
 }

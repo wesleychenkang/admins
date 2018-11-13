@@ -22,10 +22,6 @@ public class MenuService {
         return menuDao.getAllMenu();
     }
 
-    public int getCount() {
-
-        return menuDao.getCount();
-    }
 
 
 }
