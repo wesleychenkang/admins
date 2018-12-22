@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaoqu.dao.GameDao">
+    <select id="getAllGame" resultType="com.miaoqu.entity.Game">
+        select tid,gameName,createTime,updateTime,parentID,gameId from game
+    </select>
+    <insert id="addGame" parameterType="Game" useGeneratedKeys="true" keyProperty="id">
+        insert into game (gameName,createTime,updateTime,parentID,gameId) values(#{gameName},#{createTime},#{updateTime},#{parentID},#{gameId})
+    </insert>
+
+    <delete id="deleteGame">
+        delete from game where tid = #{tid}
+    </delete>
+
+    <update id="updateGame" parameterType="Game">
+
+        update  game set gameName = #{gameName} , updateTime = #{updateTime}  , parentID = #{parentID} where  tid = #{tid}
+
+    </update>
+
+</mapper>

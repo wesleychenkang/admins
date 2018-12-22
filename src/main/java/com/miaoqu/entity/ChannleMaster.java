@@ -1,7 +1,5 @@
 package com.miaoqu.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 /**
@@ -12,6 +10,7 @@ public class ChannleMaster {
 
     private Integer tid;
     private String channelName;
+    private Integer masterId;
     // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -38,4 +37,24 @@ public class ChannleMaster {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public Integer getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(Integer masterId) {
+        this.masterId = masterId;
+    }
+
+    @Override
+    public String toString() {
+        return "ChannleMaster{" +
+                "tid=" + tid +
+                ", channelName='" + channelName + '\'' +
+                ", masterId=" + masterId +
+                ", createTime=" + createTime +
+                '}';
+    }
+
+
 }

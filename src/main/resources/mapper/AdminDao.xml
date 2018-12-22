@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaoqu.dao.AdminDao">
+    <resultMap id="admin" type="Admin">
+        <id property="tid" column="tid"/>
+        <result property="name" column="name"/>
+        <result property="passWord" column="passWord"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="roleId" column="roleId"/>
+        <result property="parentID" column="parentID"/>
+    </resultMap>
+    <resultMap id="adminRole" extends="admin" type="Admin">
+        <association property="role" columnPrefix="r_" javaType="Role">
+            <id property="tid" column="tid"/>
+            <result property="parentID" column="parentID"/>
+            <result property="name" column="name"/>
+            <result property="createTime" column="createTime"/>
+            <result property="parentID" column="parentID"/>
+            <result property="authorityId" column="authorityId"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="adminGame" type="Game">
+        <id property="tid" column="tid"/>
+        <result property="gameName" column="gameName"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="parentID" column="parentID"/>
+        <result property="gameId" column="gameId"/>
+    </resultMap>
+
+    <resultMap id="adminChannle" type="Channle">
+        <id property="tid" column="tid"/>
+        <result column="masterId" property="masterId"/>
+        <result column="scid" property="scid"/>
+        <result column="name" property="name"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="adminChannleMaster" type="ChannleMaster">
+        <id property="tid" column="tid"/>
+        <result column="channelName" property="channelName"/>
+        <result column="createTime" property="createTime"/>
+        <result column="masterId" property="masterId"/>
+    </resultMap>
+
+    <select id="getAllAdmin" resultMap="adminRole">
+       SELECT a.tid,a.`name`,a.`passWord`,a.createTime,a.updateTime,a.roleId,a.parentID,r.tid r_tid,r.`name` r_name,r.createTime r_createTime,
+       r.parentID r_parentID,r.authorityId r_authorityId FROM `admin` AS a JOIN role AS r ON a.roleId = r.tid ;
+    </select>
+    <select id="getAdminGames" resultMap="adminGame">
+        SELECT g.tid as tid, g.gameId as gameId, gameName, parentID,updateTime,createTime,adminId  FROM admin_game as ag JOIN game as g on g.tid = ag.gameId where ag.adminId = #{adminId};
+    </select>
+    <select id="getAdminChannle" resultMap="adminChannle">
+        SELECT c.tid,c.scid,c.`name`,c.masterId,c.createTime,ac.tid ac_tid,ac.adminId ac_adminId, ac.channleId ac_channleId FROM `channle` as c
+         JOIN admin_channle as ac ON c.tid = ac.channleId where ac.adminId = #{adminId};
+    </select>
+    <select id="getAdminChannleMaster" resultMap="adminChannleMaster">
+        SELECT c.tid,c.channelName,c.createTime,c.masterId,acm.tid acm_tid,acm.adminId acm_adminId,acm.channleMasterId acm_channleMasterId from channle_master as c JOIN
+          admin_channle_master as acm  on c.tid = acm.channleMasterId where acm.adminId = #{adminId};
+    </select>
+
+    <select id="getAdmin" resultType="Admin">
+     SELECT  * from admin where name = #{name} and password = #{passWord};
+    </select>
+    <insert id="addAdmin" parameterType="Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into admin (createTime,parentId,name,roleId,updateTime,passWord) values(#{createTime},#{parentId},#{name},#{roleId},#{updateTime},#{passWord});
+    </insert>
+    <insert id="addAdminGames" useGeneratedKeys="true" keyProperty="id">
+        insert into admin_game(adminId,gameId) values (#{adminId},#{gameId});
+    </insert>
+    <insert id="addAdminChannles" useGeneratedKeys="true" keyProperty="id">
+        insert into admin_channle(adminId,channleId) values(#{adminId},#{channleId});
+    </insert>
+    <insert id="addAdminChannleMasters" useGeneratedKeys="true" keyProperty="id">
+        insert into admin_channle_master(adminId,channleMasterId) values(#{adminId},#{channleMasterId});
+    </insert>
+
+    <delete id="deleteAdmin">
+        delete from admin where tid = #{tid}
+    </delete>
+    <delete id="deleteAdminGame">
+        delete from admin_game
+        <where>
+            <if test="gameId == null or adminId == null">
+                adminId = #{adminId}
+            </if>
+            <if test="adminId!=null and gameId !=null">
+                adminId = #{adminId} AND gameId = #{gameId}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteAdminChannle">
+        delete from admin_channle
+        <where>
+            <if test="channleId == null or adminId == null">
+                adminId = #{adminId}
+            </if>
+            <if test="adminId!=null and channleId !=null">
+                adminId = #{adminId} AND channleId = #{channleId}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteAdminChannleMaster">
+        delete from admin_channle_master
+        <where>
+            <if test="channleMasterId == null or adminId == null">
+                adminId = #{adminId}
+            </if>
+            <if test="adminId!=null and channleMasterId !=null">
+                adminId = #{adminId} AND channleMasterId = #{channleMasterId}
+            </if>
+        </where>
+
+
+    </delete>
+    <update id="updateAdmin" parameterType="Admin">
+        update  admin set  parentId = #{parentId},name = #{name} ,roleId=#{roleId},updateTime= #{updateTime}, createTime =#{createTime}, passWord=#{passWord} where  tid = #{tid}
+    </update>
+
+</mapper>

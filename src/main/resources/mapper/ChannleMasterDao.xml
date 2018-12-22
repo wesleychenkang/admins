@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaoqu.dao.ChannleMasterDao">
+    <select id="getAllChannleMaster" resultType="com.miaoqu.entity.ChannleMaster">
+        select tid,channelName,createTime,masterId from channle_master
+    </select>
+    <insert id="addChannleMaster" parameterType="ChannleMaster" useGeneratedKeys="true" keyProperty="id">
+        insert into channle_master (channelName,createTime,masterId) values(#{channelName},#{createTime},#{masterId})
+    </insert>
+    <delete id="deleteChannleMaster">
+        delete from channle_master where tid = #{tid}
+    </delete>
+    <update id="updateChannleMaster" parameterType="ChannleMaster">
+        update  channle_master set masterId = #{masterId} , channelName = #{channelName} where  tid = #{tid}
+    </update>
+
+</mapper>

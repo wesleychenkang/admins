@@ -6,6 +6,8 @@ import java.util.List;
  * Created by wesley on 2018/10/31.
  * <p>
  * 菜单
+ * 暂时只支持二级菜单
+ *
  */
 public class Menu {
 

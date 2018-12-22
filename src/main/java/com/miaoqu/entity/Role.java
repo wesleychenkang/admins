@@ -25,17 +25,22 @@ public class Role {
      */
     private Integer parentID;
 
-    /**
-     * 菜单ID集合
-     */
-    private String menus;
-
 
     /**
      * 子角色ID集合
      */
     private List<Role> child;
-    private List<Menu> list;
+
+    /**
+     * 角色拥有的权限
+     */
+    private Authority authority;
+
+    /**
+     * 权限ID
+     */
+    private Integer authorityId;
+
 
     public Integer getTid() {
         return tid;
@@ -61,13 +66,6 @@ public class Role {
         this.createTime = createTime;
     }
 
-    public List<Menu> getList() {
-        return list;
-    }
-
-    public void setList(List<Menu> list) {
-        this.list = list;
-    }
 
     public Integer getParentID() {
         return parentID;
@@ -85,11 +83,32 @@ public class Role {
         this.child = child;
     }
 
-    public String getMenus() {
-        return menus;
+    public Authority getAuthority() {
+        return authority;
     }
 
-    public void setMenus(String menus) {
-        this.menus = menus;
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    public Integer getAuthorityId() {
+        return authorityId;
+    }
+
+    public void setAuthorityId(Integer authorityId) {
+        this.authorityId = authorityId;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "tid=" + tid +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                ", parentID=" + parentID +
+                ", child=" + child +
+                ", authority=" + authority +
+                ", authorityId=" + authorityId +
+                '}';
     }
 }

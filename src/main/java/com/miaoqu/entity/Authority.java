@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * Created by wesley on 2018/10/31.
- * 权限
+ * 权限 指定菜单集合
+ * 页面点集合，后续添加
  */
 public class Authority {
 
@@ -14,30 +15,35 @@ public class Authority {
     private Integer tid;
 
     /**
-     * 用户
+     * 权限类型
      */
-    private User user;
+    private String type;
 
     /**
-     * 角色
+     * 菜单选项组（用逗号隔开）
      */
-    private Role role;
+    private String menus;
 
     /**
-     * 所拥有的游戏ID集合
+     * 菜单集合
      */
-    private List<Game> listGames;
+    private List<Menu> listMenu;
 
-    /**
-     * 子渠道集合
-     */
-    private List<Channle> listChannle;
+    public List<Menu> getListMenu() {
+        return listMenu;
+    }
 
-    /**
-     * 渠道商集合
-     */
-    private List<ChannleMaster> listChannleMaster;
+    public void setListMenu(List<Menu> listMenu) {
+        this.listMenu = listMenu;
+    }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getTid() {
         return tid;
@@ -47,43 +53,20 @@ public class Authority {
         this.tid = tid;
     }
 
-    public User getUser() {
-        return user;
+    public String getMenus() {
+        return menus;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMenus(String menus) {
+        this.menus = menus;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public List<Game> getListGames() {
-        return listGames;
-    }
-
-    public void setListGames(List<Game> listGames) {
-        this.listGames = listGames;
-    }
-
-    public List<Channle> getListChannle() {
-        return listChannle;
-    }
-
-    public void setListChannle(List<Channle> listChannle) {
-        this.listChannle = listChannle;
-    }
-
-    public List<ChannleMaster> getListChannleMaster() {
-        return listChannleMaster;
-    }
-
-    public void setListChannleMaster(List<ChannleMaster> listChannleMaster) {
-        this.listChannleMaster = listChannleMaster;
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "tid=" + tid +
+                ", type='" + type + '\'' +
+                ", menus='" + menus + '\'' +
+                '}';
     }
 }

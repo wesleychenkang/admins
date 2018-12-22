@@ -2,11 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.miaoqu.dao.MenuDao">
     <select id="getAllMenu" resultType="com.miaoqu.entity.Menu">
-        select *
-        from menu
+        select tid,name,createTime,parentID,path from menu
     </select>
+    <insert id="addMenu" parameterType="Menu" useGeneratedKeys="true" keyProperty="id">
+        insert into menu (name,createTime,parentID,path) values(#{name},#{createTime},#{parentID},#{path})
+    </insert>
+    
+    <delete id="deleteMenu">
+        delete from menu where tid = #{tid}
+    </delete>
 
-    <select id="getCount" resultType="java.lang.Integer">
-        select count(*)from menu
-    </select>
+    <update id="updateMenu" parameterType="Menu">
+
+        update  menu set parentID = #{parentID} , path = #{path}  , name = #{name} where  tid = #{tid}
+
+    </update>
+
 </mapper>

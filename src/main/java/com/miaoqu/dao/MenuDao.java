@@ -2,7 +2,6 @@ package com.miaoqu.dao;
 
 import com.miaoqu.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -24,14 +23,17 @@ public interface MenuDao {
      *
      * @param menu
      */
-    void add(Menu menu);
+    void addMenu(Menu menu);
 
     /**
      * 删除菜单
      *
      * @param tid
      */
-    void remove(Integer tid);
+    void deleteMenu(Integer tid);
+
+
+    void updateMenu(Menu menu);
 
 
 }

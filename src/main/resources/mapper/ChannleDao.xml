@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaoqu.dao.ChannleDao">
+    <resultMap id="channles" type="com.miaoqu.entity.Channle">
+        <id column="tid" property="tid"/>
+        <result column="masterId" property="masterId"/>
+        <result column="scid" property="scid"/>
+        <result column="name" property="name"/>
+        <result column="createTime" property="createTime"/>
+        <association property="channleMaster" javaType="com.miaoqu.entity.ChannleMaster">
+            <id column="tid2" property="tid"/>
+            <result column="createTime2" property="createTime"/>
+            <result column="channelName" property="channelName"/>
+            <result column="masterId2" property="masterId"/>
+        </association>
+
+    </resultMap>
+    <select id="getAllChannle" resultMap="channles">
+        SELECT c.tid as tid,c.masterId as masterId,c.scid,c.name,
+        cm.channelName,cm.tid AS  tid2,
+        cm.createTime as createTime2 ,
+        cm.masterId as masterId2 FROM channle AS c JOIN channle_master as cm ON c.masterId = cm.tid
+    </select>
+    <insert id="addChannle" parameterType="Channle" useGeneratedKeys="true" keyProperty="id">
+        insert into channle (masterId,scid,name) values(#{masterId},#{scid},#{name})
+    </insert>
+    <delete id="deleteChannle">
+        delete from channle where tid = #{tid}
+    </delete>
+    <update id="updateChannle" parameterType="Channle">
+        update  channle set masterId = #{masterId} , scid = #{scid},name = #{name} where  tid = #{tid}
+    </update>
+    <select id="getChannleByMasterId" parameterType="java.lang.Integer" resultMap = "channles">
+         SELECT c.tid as tid,c.masterId as masterId,c.scid,c.name,
+        cm.channelName,cm.tid AS  tid2,
+        cm.createTime as createTime2 ,
+        cm.masterId as masterId2 FROM channle AS c JOIN channle_master as cm ON c.masterId = cm.tid where c.masterId = #{masterId}
+    </select>
+</mapper>

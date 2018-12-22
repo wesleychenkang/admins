@@ -16,10 +16,15 @@ public interface RoleDao {
 
     List<Role> getAllRole();
 
-    void udateRole(Role role);
+    void updateRole(Role role);
 
-    void removeRole(Integer roleId);
+    void deleteRole(Integer roleId);
 
     void addRole(Role role);
+
+    List<Menu> getRoleMenu();
+
+    void addRoleMean(List<Menu> list);
+
 
 }

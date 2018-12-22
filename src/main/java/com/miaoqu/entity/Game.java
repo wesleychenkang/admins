@@ -8,13 +8,13 @@ import java.util.List;
  * 游戏实体类
  */
 public class Game {
-
     private Integer tid;
     private String gameName;
     private Date createTime;
     private Date updateTime;
     private Integer parentID;
     private List<Game> child;
+    private String gameId;
 
     public Integer getTid() {
         return tid;
@@ -63,5 +63,25 @@ public class Game {
 
     public void setParentID(Integer parentID) {
         this.parentID = parentID;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "tid=" + tid +
+                ", gameName='" + gameName + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", parentID=" + parentID +
+                ", child=" + child +
+                ", gameId='" + gameId + '\'' +
+                '}';
     }
 }

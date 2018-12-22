@@ -32,6 +32,11 @@ mybatis:
    mapperLocations: classpath:mapper/*Dao.xml
    typeAliasesPackage: com.miaoqu.entity
 
+logging:
+  level:
+     com.miaoqu.dao : debug
+
+
 #    mapper:
 #       mappers :
 #       not-empty : false

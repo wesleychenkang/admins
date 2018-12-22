@@ -15,8 +15,11 @@ public interface AuthorityDao {
 
     void updateAuthority(Authority authority);
 
-    void deleteAutnority(Integer authorityId);
+    void deleteAuthority(Integer tid);
 
-    void addAutnority(Authority authority);
+    void addAuthority(Authority authority);
+
+    Authority getAuthorityById(Integer tid);
+
 
 }

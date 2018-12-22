@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaoqu.dao.AuthorityDao">
+
+    <select id="getAllAuthority" resultType="Authority">
+        SELECT tid,type,menus from authority
+    </select>
+    <select id="getAuthorityById" resultType="com.miaoqu.entity.Authority">
+        SELECT  tid,type, menus from authority WHERE  tid = #{tid}
+    </select>
+    <insert id="addAuthority" parameterType="com.miaoqu.entity.Authority" useGeneratedKeys="true" keyProperty="id">
+        insert into authority (type,menus) values(#{type},#{menus})
+    </insert>
+    <delete id="deleteAuthority">
+        delete from authority where tid = #{tid}
+    </delete>
+    <update id="updateAuthority" parameterType="Authority">
+        update  authority set type = #{type} , menus = #{menus} where  tid = #{tid}
+    </update>
+</mapper>
