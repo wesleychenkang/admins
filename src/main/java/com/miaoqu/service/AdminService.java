@@ -68,7 +68,8 @@ public class AdminService {
     }
 
     public void addAdmin(Admin admin) {
-
+        admin.setCreateTime(new Date());
+        admin.setUpdateTime(new Date());
         adminDao.addAdmin(admin);
     }
 

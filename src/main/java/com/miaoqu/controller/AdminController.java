@@ -1,7 +1,12 @@
 package com.miaoqu.controller;
 
 import com.miaoqu.entity.Admin;
+import com.miaoqu.pojo.ResultModel;
+import com.miaoqu.pojo.User;
 import com.miaoqu.service.AdminService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +17,7 @@ import java.util.Map;
 /**
  * Created by wesley on 2018/12/14.
  */
+@Api(value = "用户登录管理类")
 @RestController
 @RequestMapping(value = "/admin")
 public class AdminController extends BaseController {
@@ -22,39 +28,24 @@ public class AdminController extends BaseController {
     /**
      * 登录
      *
-     * @param admin
+     * @param user
      */
+    @ApiOperation(value = "用于登录方法操作")
+    @ApiImplicitParam(name = "user", value = "用户登录参数", dataType = "User")
     @RequestMapping(value = "/login")
-    public Map<String, Object> login(Admin admin) {
-        Map<String, Object> map = new HashMap<>();
-        if (admin.getName() == null || admin.getPassWord() == null || admin.getName().trim().length() == 0 || admin.getPassWord().trim().length() == 0) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1001);
-            map.put(MSG, "name or password is null");
-            return map;
+    public ResultModel<Admin> login(User user) {
+
+        if (user.getName() == null || user.getPassWord() == null || user.getName().trim().length() == 0 || user.getPassWord().trim().length() == 0) {
+
+            return ResultModel.failure("name or password is null", 10001);
         }
-        Admin temp = adminService.getAdmin(admin.getName(), admin.getPassWord());
+        Admin temp = adminService.getAdmin(user.getName(), user.getPassWord());
         if (null == temp) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1002);
-            map.put(MSG, "login fail");
-            return map;
+
+            return ResultModel.failure("login fail", 10001);
         }
-        // 用户的渠道
-//        List<Channle>  list_Channle = adminService.getAdminChannle(temp);
-//        temp.setChannles(list_Channle);
 
-        //用户的游戏
-//        List<Game> list_game =  adminService.getAdminGames(temp);
-//        temp.setGames(list_game);
-
-        //用户的渠道商
-//        List<ChannleMaster> list_channle_master =  adminService.getAdminChannleMaster(temp);
-//        temp.setChannleMasters(list_channle_master);
-
-
-        map.put(STATUS, SUCCESS);
-        return map;
+        return ResultModel.success(temp, "login success");
     }
 
     /**
@@ -62,27 +53,30 @@ public class AdminController extends BaseController {
      *
      * @param admin
      */
+    @ApiOperation(value = "更新用户")
+    @ApiImplicitParam(name = "admin", value = "新用户信息", dataType = "User")
     @RequestMapping(value = "/updateAdmin")
-    public Map<String, Object> updateAdmin(Admin admin) {
-        Map<String, Object> map = new HashMap<>();
+    public ResultModel<Admin> updateAdmin(User admin) {
         if (admin.getPassWord() == null || admin.getName() == null) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1001);
-            map.put(MSG, "name or password is null");
+            return ResultModel.failure("name or password is null");
         }
         try {
-            int r = adminService.updateAdmin(admin);
+            Admin temp = new Admin();
+            temp.setTid(admin.getTid());
+            temp.setName(admin.getName());
+            temp.setPassWord(admin.getPassWord());
+            int r = adminService.updateAdmin(temp);
             if (r > 0) {
-                map.put(STATUS, SUCCESS);
-                map.put(ERROR, 0);
+
+                return ResultModel.success(temp, "update success");
             }
 
         } catch (Exception e) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1002);
-            map.put(MSG, e.getMessage());
+
+            return ResultModel.failure(MSG, 1002);
         }
-        return map;
+        return ResultModel.failure(MSG);
+
     }
 
     /**
@@ -91,23 +85,21 @@ public class AdminController extends BaseController {
      * @param admin
      */
     @RequestMapping(value = "/addAmin")
-    public Map<String, Object> addAdmin(Admin admin) {
-        Map<String, Object> map = new HashMap<>();
+    @ApiOperation(value = "用于新增用户")
+    public ResultModel<Admin> addAdmin(User admin) {
         if (admin.getPassWord() == null || admin.getName() == null) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1001);
-            map.put(MSG, "name or password is null");
+            return ResultModel.failure("name or password is null");
         }
         try {
-            adminService.addAdmin(admin);
-            map.put(STATUS, SUCCESS);
-            map.put(ERROR, 0);
+            Admin temp = new Admin();
+            temp.setName(admin.getName());
+            temp.setPassWord(admin.getPassWord());
+            adminService.addAdmin(temp);
+            return ResultModel.success(temp, "add success");
         } catch (Exception e) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1002);
-            map.put(MSG, e.getMessage());
+            e.printStackTrace();
+            return ResultModel.failure("add fail" + e.getMessage());
         }
-        return map;
     }
 
 
@@ -116,29 +108,25 @@ public class AdminController extends BaseController {
      *
      * @param admin
      */
+    @ApiOperation(value = "删除用户接口")
     @RequestMapping(value = "/deleteAdmin")
-    public Map<String, Object> deleteAdmin(Admin admin) {
+    public ResultModel<Admin> deleteAdmin(User admin) {
         Map<String, Object> map = new HashMap<>();
-        if (admin.getPassWord() == null || admin.getName() == null) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1001);
-            map.put(MSG, "name or password is null");
+        if (admin.getPassWord() == null || admin.getName() == null || admin.getTid() == null) {
+            return ResultModel.failure("name , tid  or password is null");
         }
         try {
             int r = adminService.deleteAdmin(admin.getTid());
-            if(r>0) {
-                map.put(STATUS, SUCCESS);
-                map.put(ERROR, 0);
-            }else{
-                map.put(STATUS, FAIL);
-                map.put(ERROR, 0);
+            if (r > 0) {
+                return ResultModel.success("SUCCESS");
+            } else {
+                return ResultModel.failure("delelte by tid");
             }
         } catch (Exception e) {
-            map.put(STATUS, FAIL);
-            map.put(ERROR, 1002);
-            map.put(MSG, e.getMessage());
+
+            return ResultModel.failure(e.getMessage(), 1002);
         }
-        return map;
+
     }
 
 
